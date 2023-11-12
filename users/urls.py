@@ -5,5 +5,6 @@ from django.contrib.staticfiles.urls import static
 
 urlpatterns = [
   path('perfil', views.profile, name='profile'),
-  path('lista-usuarios/', views.show_users, name='users_list')
+  path('lista-usuarios/', views.show_users, name='users_list'),
+  path('login/', views.login_view, name='login')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
