@@ -1,18 +1,21 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
-class Role(models.Model):
-  role_id = models.CharField(primary_key=True, unique=True, blank=False, max_length=30)
-  role_name = models.CharField(max_length=60, blank=False)
+class MyUser(AbstractUser):
+  is_admin = models.BooleanField(default=False)
 
-  def __str__(self):
-    return self.role_name
+  groups = models.ManyToManyField(
+    "auth.Group",
+    related_name="myuser_set",
+    related_query_name="myuser",
+    blank=True,
+    help_text="The groups this user belongs to. A user will get all permissions granted to each of their groups.",
+  )
 
-class User(models.Model):
-  name = models.CharField(max_length=100)
-  last_name = models.CharField(max_length=100)
-  email = models.EmailField(unique=True)
-  password = models.CharField(max_length=60)
-  role = models.ForeignKey(Role, on_delete=models.CASCADE)
-
-  def __str__(self):
-    return self.name
+  user_permissions = models.ManyToManyField(
+    "auth.Permission",
+    related_name="myuser_set",
+    related_query_name="myuser",
+    blank=True,
+    help_text="Specific permissions for this user.",
+  )
