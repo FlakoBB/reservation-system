@@ -10,10 +10,7 @@
     <h2>Login</h2>
     <form method="POST">
       {% csrf_token %}
-      {{ form.email }}
-      {{ form.errors.email }}
-      {{ form.password }}
-      {{ form.errors.password }}
+      {{ form.as_p }}
       <input type="submit" value="Iniciar sesión">
     </form>
   </article>
