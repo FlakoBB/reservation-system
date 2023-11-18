@@ -1,35 +1,76 @@
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.shortcuts import render, redirect
-from .forms import MyLoginForm
-from .models import User
+from .forms import UserRegister, LoginForm
+from .models import MyUser
 
+def register_view(request):
+  if request.method == 'POST':
+    form = UserRegister(request.POST)
+    if form.is_valid():
+      user = form.save(commit=False)
+      user.is_admin = False
+      user.save()
+      return redirect('login')
+  else:
+    form = UserRegister()
+  
+  return render(request, 'users/forms/register.html', {'form': form})
+
+def login_view(request):
+  if request.method == 'POST':
+    form = LoginForm(request, data=request.POST)
+    if form.is_valid():
+      username = form.cleaned_data.get('username')
+      password = form.cleaned_data.get('password')
+      user = authenticate(request, username=username, password=password)
+
+      if user is not None:
+        login(request, user)
+
+        if user.is_admin:
+          return redirect('admin_dashboard')
+        else:
+          return redirect('profile')
+      else:
+        messages.error(request, 'Usuario no valido')
+    else:
+      messages.error(request, 'El usuario o la contraseña son incorrectos')
+  else:
+    form = LoginForm()
+  
+  return render(request, 'users/forms/login.html', {'form': form})
+
+@login_required
+def admin_dashboard(request):
+  if not request.user.is_admin:
+    return redirect('profile')
+  
+  return render(request, 'users/admin-dashboard.html')
+
+@login_required
+def admin_register(request):
+  if not request.user.is_admin:
+    return redirect('profile')
+  
+  if request.method == 'POST':
+    form = UserRegister(request.POST)
+    if form.is_valid():
+      user = form.save(commit=False)
+      user.is_admin = True
+      user.save()
+      return redirect('login')
+  else:
+    form = UserRegister()
+  
+  return render(request, 'users/forms/admin-register.html', {'form': form})
+
+@login_required
 def profile(request):
   return render(request, 'users/perfil.html')
 
 def show_users(request):
-  users = User.objects.all()
+  users = MyUser.objects.all()
   return render(request, 'users/users-list.html', {'users': users})
 
-def login_view(request):
-  if request.method == 'POST':
-    form = MyLoginForm(request.POST)
-    if form.is_valid():
-      email = form.cleaned_data['email']
-      password = form.cleaned_data['password']
-      
-      try:
-        user = User.objects.filter(email=email).first()
-        if user:
-          if user.password != password:
-            pass # ? Si la contraseña no es igual...
-          else:
-            return redirect('profile')
-        else:
-          pass #? si el usuario no existe...
-        
-      except User.DoesNotExist:
-        user = None        
-  else:
-    form = MyLoginForm()
-  
-  return render(request, 'users/forms/login.html', {'form': form})
