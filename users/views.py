@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from .forms import UserRegister, LoginForm
@@ -29,7 +30,7 @@ def login_view(request):
         login(request, user)
 
         if user.is_admin:
-          return redirect('users_list')
+          return redirect('admin_dashboard')
         else:
           return redirect('profile')
       else:
@@ -41,6 +42,31 @@ def login_view(request):
   
   return render(request, 'users/forms/login.html', {'form': form})
 
+@login_required
+def admin_dashboard(request):
+  if not request.user.is_admin:
+    return redirect('profile')
+  
+  return render(request, 'users/admin-dashboard.html')
+
+@login_required
+def admin_register(request):
+  if not request.user.is_admin:
+    return redirect('profile')
+  
+  if request.method == 'POST':
+    form = UserRegister(request.POST)
+    if form.is_valid():
+      user = form.save(commit=False)
+      user.is_admin = True
+      user.save()
+      return redirect('login')
+  else:
+    form = UserRegister()
+  
+  return render(request, 'users/forms/admin-register.html', {'form': form})
+
+@login_required
 def profile(request):
   return render(request, 'users/perfil.html')
 

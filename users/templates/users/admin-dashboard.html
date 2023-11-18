@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+  Dashboard Administrador
+{% endblock %}
+
+{% block contain %}
+  <h1>Dashboard</h1>
+  <p>Este es el Dashboard del administrador</p>
+  <nav>
+    <p><a href="{% url 'users_list' %}">Lista de usuarios</a></p>
+    <p><a href="{% url 'admin_register' %}">Agreagar Administrador</a></p>
+  </nav>
+{% endblock %}
