@@ -1,6 +1,5 @@
-{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +7,7 @@
 </head>
 <body>
   <header>
-    <h1>SREC</h1>
+    <h1>Layout Global</h1>
     <nav>
       {% if request.user.is_authenticated %}
         <a href="{% url 'exit' %}">Salir</a>
@@ -18,8 +17,6 @@
       {% endif %}
     </nav>
   </header>
-  <main>
-    {% block contain %}{% endblock %}
-  </main>
+  {% block content %}{% endblock %}
 </body>
 </html>
