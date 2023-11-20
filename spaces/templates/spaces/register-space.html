@@ -1,0 +1,13 @@
+{% extends 'spaces_layout.html' %}
+
+{% block title %}
+  Registrar Espacio
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Guardar">
+  </form>
+{% endblock %}

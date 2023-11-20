@@ -1,0 +1,17 @@
+{% extends 'spaces_layout.html' %}
+
+{% block title %}
+  Lista de Espacios
+{% endblock %}
+
+{% block content %}
+  <ul>
+    {% for space in spaces %}
+      <li>
+        <h3>{{ space.name }}</h3>
+        <span>Capacidad: {{ space.capacity}}</span>
+        <span>Disponibilidad: {{ space.is_available}}</span>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}
