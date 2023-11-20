@@ -1,0 +1,17 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  color: #E6ECF3;
+}
+
+body {
+  min-height: 100dvh;
+  background-color: #0E1A33;
+}
+
+a {
+  color: #2960AB;
+  font-weight: 500;
+  text-shadow: 0 0 1px #E6ECF3;
+}
