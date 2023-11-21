@@ -6,12 +6,58 @@
 }
 
 body {
+  position: relative;
   min-height: 100dvh;
   background-color: #0E1A33;
+  padding: 2rem 4rem;
+}
+
+header {
+  height: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+main {
+  height: calc(100dvh - 12rem);
+}
+
+footer {
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
 }
 
 a {
   color: #2960AB;
   font-weight: 500;
   text-shadow: 0 0 1px #E6ECF3;
+}
+
+a:visited {
+  color: #E6ECF3;
+  text-shadow: 0 0 1px #2960AB;
+}
+
+input {
+  color: #2960AB ;
+  font-weight: 500;
+}
+
+input[type='submit'] {
+  padding: .4rem;
+  background-color: #E6ECF3;
+  border-radius: .5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
 }
