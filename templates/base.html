@@ -8,17 +8,24 @@
   <link rel="stylesheet" href="{% static 'styles/globals.css' %}">
 </head>
 <body>
-  <header>
-    <h1>Layout Global</h1>
-    <nav>
-      {% if request.user.is_authenticated %}
-        <a href="{% url 'exit' %}">Salir</a>
-      {% else %}
-        <a href="{% url 'register_user' %}">Registrarse</a>
-        <a href="{% url 'login' %}">Iniciar sesión</a>
-      {% endif %}
-    </nav>
-  </header>
+  {% block header %}
+    <header>
+      <h1>Layout Global</h1>
+      <nav>
+        {% if request.user.is_authenticated %}
+          <a href="{% url 'exit' %}">Salir</a>
+        {% else %}
+          <a href="{% url 'register_user' %}">Registrarse</a>
+          <a href="{% url 'login' %}">Iniciar sesión</a>
+        {% endif %}
+      </nav>
+    </header>
+  {% endblock %}
+
   {% block content %}{% endblock %}
+
+  {% block footer %}
+    <footer>Este es el footer</footer>
+  {% endblock %}
 </body>
 </html>

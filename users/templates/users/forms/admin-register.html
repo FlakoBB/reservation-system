@@ -1,11 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Registro Admin</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block title %}Registro de Administrador{% endblock %}
+
+{% block header %}{% endblock %}
+
+{% block content %}
   <article>
     <h2>Registro de Administrador</h2>
     <form method="POST">
@@ -14,5 +13,6 @@
       <input type="submit" value="Registrar">
     </form>
   </article>
-</body>
-</html>
+{% endblock %}
+
+{% block footer %}{% endblock %}
