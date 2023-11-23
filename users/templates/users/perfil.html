@@ -4,9 +4,22 @@
 
 {% block content %}
 
-<h2>Este es el contenido de perfil</h2>
-<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel blanditiis maiores, doloremque impedit neque nesciunt qui perferendis maxime debitis id atque voluptatem, velit, consequatur earum quo nobis fuga soluta! Odit?</p>
+<h2>{{user.first_name}} {{user.last_name}}</h2>
+<h3>{{user.username}}</h3>
 
-<a href="{% url 'users_list' %}">Ver lista de usuarios</a>
+<nav>
+  <a href="{% url 'spaces_list' %}">Ver lista de espacios</a>
+</nav>
+
+<h2>Tus Reservaciones</h2>
+<br>
+<ul>
+  {% for space in spaces %}
+    <li>
+      <h4>{{space.space.name}}</h4>
+      <p>{{space.reservation_date}}</p>
+    </li>
+  {% endfor %}
+</ul>
 
 {% endblock %}

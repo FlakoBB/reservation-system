@@ -1,4 +1,5 @@
 from django.db import models
+from users.models import MyUser
 
 class SpaceType(models.Model):
   space_id = models.CharField(primary_key=True, unique=True, blank=False, max_length=30)
@@ -17,3 +18,11 @@ class CoworkingSpace(models.Model):
 
   def __str__(self):
     return f'{self.name} - {self.space_type.space_name}'
+
+class Reservation(models.Model):
+  user = models.ForeignKey(MyUser, on_delete=models.CASCADE)
+  space = models.ForeignKey(CoworkingSpace, on_delete=models.CASCADE)
+  reservation_date = models.DateTimeField(auto_now_add=True)
+
+  def __str__(self):
+    return f'{self.space.name}: {self.user.username}'

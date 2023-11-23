@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from .forms import UserRegister, LoginForm
 from .models import MyUser
+from spaces.models import Reservation
 
 def register_view(request):
   if request.method == 'POST':
@@ -68,7 +69,9 @@ def admin_register(request):
 
 @login_required
 def profile(request):
-  return render(request, 'users/perfil.html')
+  user = request.user
+  spaces = Reservation.objects.filter(user=request.user)
+  return render(request, 'users/perfil.html', {'user': user, 'spaces': spaces})
 
 def landing_view(request):
   return render(request, 'users/landing.html')

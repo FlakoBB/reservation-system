@@ -11,6 +11,10 @@
         <h3>{{ space.name }}</h3>
         <span>Capacidad: {{ space.capacity}}</span>
         <span>Disponibilidad: {{ space.is_available}}</span>
+        <form action="{% url 'reserve_space' space_id=space.pk %}" method="post">
+          {% csrf_token %}
+          <input type="submit" value="Reservar">
+        </form>
       </li>
     {% endfor %}
   </ul>
